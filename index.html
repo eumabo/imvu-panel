@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YEEX</title>
+  <style>
+    :root{
+      --bg:#0b0b10;
+      --panel: rgba(0,0,0,.45);
+      --panel2: rgba(0,0,0,.35);
+      --border: rgba(255,255,255,.12);
+      --border2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --muted2: rgba(255,255,255,.45);
+      --shadow: 0 14px 50px rgba(0,0,0,.65);
+      --glow: 0 0 0 1px rgba(255,255,255,.06), 0 0 28px rgba(255,255,255,.08);
+      --accent: linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      --btn: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      --btnHover: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      --danger: linear-gradient(180deg, rgba(180,40,40,.55), rgba(120,20,20,.55));
+      --dangerHover: linear-gradient(180deg, rgba(210,60,60,.60), rgba(140,30,30,.60));
+      --radius: 10px;
+      --radius2: 14px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body { height:100%; }
+    
+    body {
+  margin: 0;
+  background: url("./assets/yeex-background-4k.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
+  pointer-events: none;
+}
+
+    /* dark overlay to match the print vibe */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      background: radial-gradient(1200px 800px at 50% 25%, rgba(0,0,0,.30), rgba(0,0,0,.70)),
+                  linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.75));
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 18px 22px 40px;
+    }
+
+    /* Top header (logo + nav) */
+    .top{
+      position:relative;
+      border:1px solid var(--border2);
+      background: rgba(0,0,0,.35);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius2);
+      overflow:hidden;
+    }
+    .top:before{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 45%);
+      pointer-events:none;
+    }
+
+.logo {
+  display: flex;
+  justify-content: center;   /* centraliza horizontal */
+  align-items: center;       /* centraliza vertical (se precisar) */
+}
+
+.logo img {
+  height: 50px; 
+}
+    
+    .nav{
+      display:flex;
+      justify-content:center;
+      gap: 44px;
+      padding: 10px 16px 14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(8px);
+      font-size: 14px;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+    .nav a{
+      color: rgba(255, 255, 255, 0.78);
+      text-decoration:none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition:.2s ease;
+    }
+    .nav a:hover{ background: rgba(255,255,255,.06); color:#fff; }
+
+    /* Controls row */
+    .controls{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr 520px;
+      gap: 18px;
+      align-items:start;
+    }
+
+    /* Left main content */
+    .main{
+      min-width: 0;
+    }
+
+    .bar{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      border:1px solid var(--border2);
+      background: rgba(0,0,0,.30);
+      border-radius: var(--radius2);
+      padding: 12px 12px;
+      box-shadow: var(--glow);
+    }
+
+    .search{
+      flex: 1;
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.25);
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .search svg{ opacity:.7; }
+    .search input{
+      width:100%;
+      border:0;
+      outline:0;
+      background:transparent;
+      color: rgba(255,255,255,.90);
+      font-size: 14px;
+    }
+    .search input::placeholder{ color: rgba(255,255,255,.45); }
+
+    .tabs{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .tab{
+      cursor:pointer;
+      user-select:none;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.25);
+      color: rgba(255,255,255,.78);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      transition:.15s ease;
+    }
+    .tab:hover{ background: rgba(255,255,255,.06); color:#fff; }
+    .tab.active{
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 0 18px rgba(255,255,255,.08);
+    }
+
+    /* Right sidebar panels */
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap: 18px;
+    }
+
+    .panel{
+      border:1px solid var(--border2);
+      background: rgba(0,0,0,.30);
+      border-radius: var(--radius2);
+      padding: 16px;
+      box-shadow: var(--glow);
+    }
+    .panel h3{
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 800;
+      color: rgba(255,255,255,.90);
+    }
+
+    .field{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.90);
+      border-radius: 10px;
+      padding: 12px 12px;
+      outline:none;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .field::placeholder{ color: rgba(255,255,255,.45); }
+
+    .btn{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background: var(--btn);
+      color: rgba(255,255,255,.90);
+      border-radius: 10px;
+      padding: 12px 12px;
+      font-weight: 800;
+      cursor:pointer;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      transition:.15s ease;
+    }
+    .btn:hover{ background: var(--btnHover); }
+    .btn.danger{ background: var(--danger); border-color: rgba(255,120,120,.25); }
+    .btn.danger:hover{ background: var(--dangerHover); }
+
+    /* Sections */
+    .section{
+      margin-top: 18px;
+      border:1px solid var(--border2);
+      background: rgba(0,0,0,.26);
+      border-radius: var(--radius2);
+      padding: 16px;
+      box-shadow: var(--glow);
+    }
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 12px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing:-.4px;
+      color: rgba(255,255,255,.88);
+    }
+    .sectionHead a{
+      color: rgba(255,255,255,.72);
+      text-decoration:none;
+      font-size: 14px;
+    }
+    .sectionHead a:hover{ color:#fff; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 1160px){
+      .controls{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 720px){
+      .grid{ grid-template-columns: 1fr; }
+      .nav{ gap: 14px; flex-wrap:wrap; }
+      .logo{ font-size: 42px; }
+    }
+
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.32);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,.55);
+      transition:.18s ease;
+      position:relative;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(0,0,0,.65), 0 0 18px rgba(255,255,255,.10);
+    }
+    .cardTop{
+      height: 150px;
+      background: rgba(255, 255, 255, 0.25);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .cardTop img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter: contrast(1.05) brightness(.95);
+      transform: scale(1.03);
+      transition: .25s ease;
+    }
+    .card:hover .cardTop img{ transform: scale(1.08); }
+
+    .cardBody{
+      padding: 12px 12px 14px;
+    }
+    .title{
+      font-size: 18px;
+      font-weight: 900;
+      margin: 0 0 6px;
+    }
+    .sub{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .price{
+      font-weight: 900;
+      letter-spacing: .2px;
+      white-space:nowrap;
+    }
+    .tags{
+      color: rgba(255,255,255,.50);
+      font-size: 12px;
+      margin-bottom: 10px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .cardBtn{
+      width: 140px;
+      border:1px solid rgba(255,255,255,.14);
+      background: var(--btn);
+      color: rgba(255,255,255,.90);
+      border-radius: 6px;
+      padding: 9px 10px;
+      font-weight: 900;
+      cursor:pointer;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: .5px;
+      transition:.15s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+    }
+    .cardBtn:hover{ background: var(--btnHover); }
+    .cardBtn.red{ background: var(--danger); border-color: rgba(255,120,120,.25); }
+    .cardBtn.red:hover{ background: var(--dangerHover); }
+
+    /* Catalog filters row */
+    .catFilters{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: 1.2fr repeat(5, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 1160px){
+      .catFilters{ grid-template-columns: 1fr 1fr; }
+      .catFilters .span2{ grid-column: span 2; }
+    }
+
+    .mini{
+      height: 42px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin:0;
+    }
+
+    select.field{ appearance:none; }
+
+    .count{
+      margin-top: 10px;
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.70);
+      border:1px solid rgba(255,255,255,.12);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,.90);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events:none;
+      transition: .22s ease;
+      z-index: 9;
+      max-width: calc(100% - 24px);
+    }
+    .toast.show{ opacity: 1; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap" id="yeex">
+    <header class="top">
+      <div class="logo">
+  <img src="./assets/logo.png" alt="YEEX Logo">
+</div>
+      <nav class="nav">
+        <a href="#yeex">INÍCIO</a>
+        <a href="#catalogo" data-nav="female">FEMININO</a>
+        <a href="#catalogo" data-nav="male">MASCULINO</a>
+        <a href="#catalogo">COLEÇÕES</a>
+      </nav>
+    </header>
+
+    <div class="controls">
+      <div class="main">
+        <div class="bar">
+          <div class="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="rgba(255,255,255,.75)" stroke-width="2"/>
+              <path d="M16.5 16.5 21 21" stroke="rgba(255,255,255,.75)" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input id="qTop" placeholder="Buscar..." />
+          </div>
+
+          <div class="tabs" id="tabs">
+            <div class="tab active" data-tab="all">TODOS</div>
+            <div class="tab" data-tab="shoe">SHOES</div>
+            <div class="tab" data-tab="clothing">CLOTHING</div>
+            <div class="tab" data-tab="unisex">UNISSEX</div>
+            <div class="tab" data-tab="offers">OFERTAS</div>
+            <div class="tab" data-tab="fav">★</div>
+          </div>
+        </div>
+
+        <section class="section" id="topWeek">
+          <div class="sectionHead">
+            <h2>Mais clicados da semana</h2>
+            <a href="#catalogo" id="seeAll">Ver tudo →</a>
+          </div>
+          <div class="grid" id="topGrid"></div>
+          <div class="count" id="topCount"></div>
+        </section>
+
+        <section class="section" id="catalogo">
+          <div class="sectionHead">
+            <h2>Catálogo</h2>
+            <a href="#catalogo" id="clearFilters">Limpar filtros</a>
+          </div>
+
+          <div class="catFilters">
+            <input class="field mini span2" id="q" placeholder="Buscar..." />
+            <select class="field mini" id="type">
+              <option value="">Tipo</option>
+              <option value="shoe">Shoes</option>
+              <option value="clothing">Clothing</option>
+            </select>
+            <select class="field mini" id="gender">
+              <option value="">Gênero</option>
+              <option value="female">Feminino</option>
+              <option value="male">Masculino</option>
+              <option value="unisex">Unissex</option>
+            </select>
+            <input class="field mini" id="category" placeholder="Categoria" />
+            <input class="field mini" id="min" placeholder="Min (c)" inputmode="numeric" />
+            <input class="field mini" id="max" placeholder="Max (c)" inputmode="numeric" />
+            <input class="field mini" id="tag" placeholder="Tag" />
+          </div>
+
+          <div class="count" id="resultCount"></div>
+          <div class="grid" id="grid"></div>
+        </section>
+      </div>
+
+      <aside class="side">
+        <div class="panel" id="login">
+          <h3>Login administrativo</h3>
+          <input class="field" placeholder="" value="" />
+          <input class="field" placeholder="" type="password" value="" />
+          <button class="btn" id="btnLogin">Entrar</button>
+        </div>
+
+        <div class="panel">
+          <h3>Catálogo</h3>
+          <input class="field" placeholder="Buscar..." id="qSide" />
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <select class="field" id="typeSide">
+              <option value="">Tipo</option>
+              <option value="shoe">Shoes</option>
+              <option value="clothing">Clothing</option>
+            </select>
+            <select class="field" id="genderSide">
+              <option value="">Gênero</option>
+              <option value="female">Feminino</option>
+              <option value="male">Masculino</option>
+              <option value="unisex">Unissex</option>
+            </select>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <input class="field" placeholder="Categoria" id="categorySide"/>
+            <input class="field" placeholder="Tag" id="tagSide"/>
+          </div>
+          <button class="btn" id="applySide">Aplicar</button>
+          <button class="btn danger" id="resetClicks" style="margin-top:10px;">Reset clicks</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // =========================
+    // CONFIG: PRODUTOS
+    // (você só troca link e imagem do produto)
+    // =========================
+    const PRODUCTS = [
+      {
+        id: "73869377",
+        name: "LV Trainer black ª",
+        type: "shoe",
+        gender: "male",
+        category: "Sneakers",
+        price: 829,
+        tags: ["lv","trainer","dark","street"],
+        img: "./assets/yeex-dunk.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=73869341",
+        offer: false,
+        fav: true
+      },
+      {
+        id: "73876556",
+        name: "Gang Tee  ª",
+        type: "clothing",
+        gender: "male",
+        category: "Tees",
+        price: 710,
+        tags: ["tee","gang","trap","dark"],
+        img: "./assets/yeex-tee.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=73876556",
+        offer: true,
+        fav: false
+      },
+      {
+        id: "73876556",
+        name: "Gang tee black ª",
+        type: "clothing",
+        gender: "male",
+        category: "Tees",
+        price: 719,
+        tags: ["tee","black","trap"],
+        img: "./assets/yeex-tee-black.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=73876556",
+        offer: true,
+        fav: false
+      },
+      {
+        id: "67073266",
+        name: "u see my heart? ª",
+        type: "clothing",
+        gender: "male",
+        category: "Tees",
+        price: 719,
+        tags: ["tees","street","dark"],
+        img: "./assets/yeex-skull.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=67073266",
+        offer: true,
+        fav: false
+      },
+
+      {
+        id: "73799859",
+        name: "OG Medium B",
+        type: "shoe",
+        gender: "male",
+        category: "sneakers",
+        price: 719,
+        tags: ["sneakers","street","dark"],
+        img: "./assets/yeex-blackwhite.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=73799859",
+        offer: true,
+        fav: false
+      },
+
+      {
+        id: "70563252",
+        name: "R1CK OWENS ORANG ª",
+        type: "shoe",
+        gender: "male",
+        category: "sneakers",
+        price: 719,
+        tags: ["sneakers","street","dark"],
+        img: "./assets/yeex-orange.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=70563252",
+        offer: true,
+        fav: false
+      },
+      
+      {
+        id: "73808456",
+        name: "1s low red ª",
+        type: "shoe",
+        gender: "male",
+        category: "sneakers",
+        price: 719,
+        tags: ["sneakers","street","dark"],
+        img: "./assets/yeex-red.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=73808456",
+        offer: true,
+        fav: false
+      },
+
+      {
+        id: "73808500",
+        name: "1s Bred Toe ª",
+        type: "shoe",
+        gender: "male",
+        category: "sneakers",
+        price: 719,
+        tags: ["sneakers","street","dark"],
+        img: "./assets/yeex-blackred.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=73808500",
+        offer: true,
+        fav: false
+      },
+
+      {
+        id: "64061861",
+        name: "Chrome Black laces ª",
+        type: "shoe",
+        gender: "male",
+        category: "sneakers",
+        price: 719,
+        tags: ["sneakers","street","dark"],
+        img: "./assets/yeex-biglaces.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=64061861",
+        offer: true,
+        fav: false
+      },
+
+      {
+        id: "64061760",
+        name: "Chrome <3 ª",
+        type: "shoe",
+        gender: "male",
+        category: "sneakers",
+        price: 719,
+        tags: ["sneakers","street","dark"],
+        img: "./assets/yeex-biglaces2.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=64061760",
+        offer: true,
+        fav: false
+      },
+
+       {
+        id: "72007279",
+        name: "Balenciaga ª",
+        type: "clothing",
+        gender: "male",
+        category: "tees",
+        price: 719,
+        tags: ["tees","street","dark"],
+        img: "./assets/balenciaga.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=72007279",
+        offer: true,
+        fav: false
+      },
+
+        {
+        id: "71687465",
+        name: "CH Sleever W ª",
+        type: "clothing",
+        gender: "male",
+        category: "tees",
+        price: 719,
+        tags: ["tees","street","dark"],
+        img: "./assets/chrome-white.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=71687465",
+        offer: true,
+        fav: false
+      },
+
+        {
+        id: "71687370",
+        name: "CH Sleeves ª",
+        type: "clothing",
+        gender: "male",
+        category: "tees",
+        price: 719,
+        tags: ["tees","street","dark"],
+        img: "./assets/chrome-black.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=71687370",
+        offer: true,
+        fav: false
+      },
+
+           {
+        id: "67547495",
+        name: "S1CK0 ª",
+        type: "clothing",
+        gender: "male",
+        category: "tees",
+        price: 719,
+        tags: ["tees","street","dark"],
+        img: "./assets/sicko.png",
+        link: "https://www.imvu.com/shop/product.php?products_id=67547495",
+        offer: true,
+        fav: false
+      },
+
+       
+
+
+    ];
+
+    // =========================
+    // TRACKING LOCAL (cliques)
+    // =========================
+    const CLICK_KEY = "yeex_clicks_v1";
+
+    function loadClicks(){
+      try { return JSON.parse(localStorage.getItem(CLICK_KEY) || "[]"); }
+      catch { return []; }
+    }
+    function saveClicks(v){ localStorage.setItem(CLICK_KEY, JSON.stringify(v)); }
+
+    function trackClick(productId){
+      const arr = loadClicks();
+      arr.push({ id: productId, ts: Date.now() });
+      saveClicks(arr);
+    }
+
+    // =========================
+    // UI helpers
+    // =========================
+    const $ = (id)=>document.getElementById(id);
+
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(window.__toastT);
+      window.__toastT = setTimeout(()=>t.classList.remove("show"), 1400);
+    }
+
+    function norm(s){ return String(s||"").toLowerCase().trim(); }
+
+    // current filters
+    const state = {
+      tab: "all",
+      q: "",
+      type: "",
+      gender: "",
+      category: "",
+      tag: "",
+      min: "",
+      max: ""
+    };
+
+    function cardHTML(p, red=false){
+      const tags = (p.tags || []).slice(0,3).join(" • ");
+      const btnClass = red ? "cardBtn red" : "cardBtn";
+      const safeLink = p.link && p.link !== "#" ? p.link : "javascript:void(0)";
+      const btnLabel = "VER NO IMVU";
+
+      return `
+        <article class="card">
+          <div class="cardTop">
+            <img src="${p.img}" alt="${p.name}">
+          </div>
+          <div class="cardBody">
+            <div class="title">${p.name}</div>
+            <div class="sub">
+              <div class="price">${p.price} CRÉDITOS</div>
+              <div style="color:rgba(255,255,255,.55);text-transform:uppercase;font-size:12px">${p.type}</div>
+            </div>
+            <div class="tags">${tags || "&nbsp;"}</div>
+            <a class="${btnClass}" href="${safeLink}" target="_blank" rel="noopener" data-click="1" data-id="${p.id}">
+              ${btnLabel}
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    function applyFilters(list){
+      const q = norm(state.q);
+      const type = state.type;
+      const gender = state.gender;
+      const category = norm(state.category);
+      const tag = norm(state.tag);
+      const min = Number(state.min || NaN);
+      const max = Number(state.max || NaN);
+
+      return list.filter(p=>{
+        // tabs
+        if (state.tab === "shoe" && p.type !== "shoe") return false;
+        if (state.tab === "clothing" && p.type !== "clothing") return false;
+        if (state.tab === "unisex" && p.gender !== "unisex") return false;
+        if (state.tab === "offers" && !p.offer) return false;
+        if (state.tab === "fav" && !p.fav) return false;
+
+        // filters
+        if (q && !norm(p.name).includes(q)) return false;
+        if (type && p.type !== type) return false;
+        if (gender && p.gender !== gender) return false;
+        if (category && !norm(p.category).includes(category)) return false;
+
+        if (tag){
+          const ok = (p.tags || []).some(t => norm(t).includes(tag));
+          if (!ok) return false;
+        }
+
+        if (!Number.isNaN(min) && Number(p.price||0) < min) return false;
+        if (!Number.isNaN(max) && Number(p.price||0) > max) return false;
+
+        return true;
+      });
+    }
+
+    function renderCatalog(){
+      const filtered = applyFilters(PRODUCTS);
+      $("grid").innerHTML = filtered.map(p => cardHTML(p, p.offer)).join("");
+      $("resultCount").textContent = `${filtered.length} item(ns)`;
+      bindClicks();
+    }
+
+    function renderTopWeek(){
+      const now = Date.now();
+      const weekAgo = now - (7*24*60*60*1000);
+      const clicks = loadClicks().filter(c => c.ts >= weekAgo);
+
+      const counts = new Map();
+      for (const c of clicks) counts.set(c.id, (counts.get(c.id)||0) + 1);
+
+      const ranked = [...counts.entries()]
+        .sort((a,b)=>b[1]-a[1])
+        .slice(0,3)
+        .map(([id,n])=>{
+          const p = PRODUCTS.find(x=>x.id===id);
+          return p ? {p,n} : null;
+        })
+        .filter(Boolean);
+
+      if (!ranked.length){
+        // fallback = first 3 items
+        const fallback = PRODUCTS.slice(0,3).map(p=>({p,n:0}));
+        $("topGrid").innerHTML = fallback.map(({p})=>cardHTML(p, p.offer)).join("");
+        $("topCount").textContent = `0 cliques (últimos 7 dias)`;
+      } else {
+        $("topGrid").innerHTML = ranked.map(({p})=>cardHTML(p, p.offer)).join("");
+        const total = [...counts.values()].reduce((a,b)=>a+b,0);
+        $("topCount").textContent = `${total} cliques (últimos 7 dias)`;
+      }
+      bindClicks();
+    }
+
+    function bindClicks(){
+      document.querySelectorAll("[data-click='1']").forEach(a=>{
+        a.addEventListener("click", ()=>{
+          const id = a.getAttribute("data-id");
+          if (!id) return;
+          trackClick(id);
+          renderTopWeek();
+        }, { once: true });
+      });
+    }
+
+    function syncFromInputs(){
+      state.q = $("q").value;
+      state.type = $("type").value;
+      state.gender = $("gender").value;
+      state.category = $("category").value;
+      state.tag = $("tag").value;
+      state.min = $("min").value;
+      state.max = $("max").value;
+    }
+
+    // Tabs
+    document.querySelectorAll(".tab").forEach(t=>{
+      t.addEventListener("click", ()=>{
+        document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+        t.classList.add("active");
+        state.tab = t.getAttribute("data-tab") || "all";
+        renderTopWeek();
+        renderCatalog();
+      });
+    });
+
+    // Top search mirrors catalog search
+    $("qTop").addEventListener("input", (e)=>{
+      const v = e.target.value;
+      $("q").value = v;
+      state.q = v;
+      renderCatalog();
+    });
+
+    // Sidebar quick apply
+    $("applySide").addEventListener("click", ()=>{
+      $("q").value = $("qSide").value;
+      $("type").value = $("typeSide").value;
+      $("gender").value = $("genderSide").value;
+      $("category").value = $("categorySide").value;
+      $("tag").value = $("tagSide").value;
+
+      syncFromInputs();
+      renderCatalog();
+      toast("Filtros aplicados");
+    });
+
+    // Admin login fake (visual)
+    $("btnLogin").addEventListener("click", ()=>toast("Login (visual) • pra funcionar de verdade precisa site + backend"));
+
+    // Clear filters
+    $("clearFilters").addEventListener("click", (e)=>{
+      e.preventDefault();
+      state.q = state.type = state.gender = state.category = state.tag = state.min = state.max = "";
+      $("q").value = $("type").value = $("gender").value = $("category").value = $("tag").value = $("min").value = $("max").value = "";
+      renderCatalog();
+      toast("Filtros limpos");
+    });
+
+    // Reset clicks
+    $("resetClicks").addEventListener("click", ()=>{
+      localStorage.removeItem(CLICK_KEY);
+      renderTopWeek();
+      toast("Clicks resetados");
+    });
+
+    // nav gender shortcuts
+    document.querySelectorAll("[data-nav]").forEach(a=>{
+      a.addEventListener("click", ()=>{
+        const g = a.getAttribute("data-nav");
+        if (g === "female" || g === "male"){
+          $("gender").value = g;
+          state.gender = g;
+          renderCatalog();
+        }
+      });
+    });
+
+    // Catalog inputs live
+    ["q","type","gender","category","tag","min","max"].forEach(id=>{
+      $(id).addEventListener("input", ()=>{
+        syncFromInputs();
+        renderCatalog();
+      });
+      $(id).addEventListener("change", ()=>{
+        syncFromInputs();
+        renderCatalog();
+      });
+    });
+
+    // Quick buttons
+    $("seeAll").addEventListener("click", ()=>{
+      document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+      document.querySelector(".tab[data-tab='all']").classList.add("active");
+      state.tab = "all";
+      renderCatalog();
+    });
+
+    // Init
+    syncFromInputs();
+    renderTopWeek();
+    renderCatalog();
+  </script>
+</body>
+</html>

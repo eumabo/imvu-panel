@@ -1,0 +1,185 @@
+<!-- Layout coding by gaf210 - custom made for yeex - Please don't copy without permission -->
+<!DOCTYPE html>
+
+
+  <meta charset="UTF-8" />
+  <title>Yeex</title>
+
+  <style>
+    #video_panel_body,
+    #video_panel,
+    #imvuContent,
+    #leftColumn {
+      width: 947px !important;
+    }
+
+    #video_panel_header,
+    #rightColumn {
+      display: none;
+    }
+
+    .box {
+      overflow: auto;
+      position: absolute;
+      text-align: center;
+    }
+
+    #layout-container {
+      font-size: 11px;
+      font-family: 'Century Gothic', sans-serif;
+      width: 947px;
+      height: 725px;
+      color: #fff;
+    }
+
+    area,
+    map {
+      cursor: pointer;
+      outline: 0;
+    }
+
+    #layoutimg {
+      position: absolute;
+      width: 947px;
+      height: 725px;
+    }
+
+    #content_container {
+      display: none !important;
+    }
+
+    #avipic {
+      margin-left: 734px;
+      margin-top: 412px;
+      width: 160px;
+      height: 220px;
+      position: absolute;
+    }
+
+    #frame1 {
+      margin-left: 213px;
+      margin-top: 130px;
+      width: 504px;
+      height: 326px;
+    }
+
+    #shout {
+      margin-left: 300px;
+      margin-top: 513px;
+      width: 296px;
+      height: 21px;
+      position: absolute;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+
+  <script>
+    /* jquery change frame function by yeex */
+    var btree = {
+      _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+      decode: function (e) {
+        var t = "";
+        var n, r, i;
+        var s, o, u, a;
+        var f = 0;
+        e = e.replace(/[^A-Za-z0-9+/=]/g, "");
+        while (f < e.length) {
+          s = this._keyStr.indexOf(e.charAt(f++));
+          o = this._keyStr.indexOf(e.charAt(f++));
+          u = this._keyStr.indexOf(e.charAt(f++));
+          a = this._keyStr.indexOf(e.charAt(f++));
+          n = s << 2 | o >> 4;
+          r = (o & 15) << 4 | u >> 2;
+          i = (u & 3) << 6 | a;
+          t = t + String.fromCharCode(n);
+          if (u != 64) { t = t + String.fromCharCode(r) }
+          if (a != 64) { t = t + String.fromCharCode(i) }
+        }
+        t = btree._utf8_decode(t);
+        return t;
+      },
+      _utf8_decode: function (e) {
+        var t = "";
+        var n = 0;
+        var r = c1 = c2 = 0;
+        while (n < e.length) {
+          r = e.charCodeAt(n);
+          if (r < 128) {
+            t += String.fromCharCode(r);
+            n++;
+          } else if (r > 191 && r < 224) {
+            c2 = e.charCodeAt(n + 1);
+            t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+            n += 2;
+          } else {
+            c2 = e.charCodeAt(n + 1);
+            c3 = e.charCodeAt(n + 2);
+            t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+            n += 3;
+          }
+        }
+        return t;
+      }
+    };
+
+    function changeframe(choice, id) {
+      if ($("#layoutimg").attr("src") == btree.decode("aHR0cHM6Ly91c2VyaW1hZ2VzLWFrbS5pbXZ1LmNvbS91c2VyZGF0YS8wMi84OS83MC83OC91c2VycGljcy9TbmFwX3RPUHM3ejdJYjQxMDk2OTQ3NjQ1LnBuZw==")) {
+        $('#' + id).fadeOut('fast', function () {
+          $('#' + id).html($('#' + choice).html());
+          $('#' + id).fadeIn('fast');
+        });
+      }
+    }
+  </script>
+
+
+
+  <div id="content_container">
+    <div id="main"><br /><br /><a href="https://pt.imvu.com/shop/web_search.php?manufacturers_id=339692210&r=acw"><img src="https://i.ibb.co/5WLrpjZV/walpp0001.png" alt="ess0000" border="0" width="500" height="280" /></a><br /><a><br /></a></div>
+    <div id="bio"><br /><br /></div>
+    <div id="one"><br /><br /></div>
+    <div id="two"><br /><br /></div>
+  </div>
+
+  <div id="layout-container">
+    <img src="https://userimages-akm.imvu.com/userdata/02/89/70/78/userpics/Snap_tOPs7z7Ib41096947645.png" usemap="#map" id="layoutimg" />
+
+    <map name="map">
+      <area shape="rect" coords="904,406,936,461" href="https://pt.imvu.com/catalog/web_add_contact.php?contact=yeex" target="_blank" title="Add yeex" />
+
+      <area shape="rect" coords="903,464,937,521" href="imvu:StartIM?avatar=yeex&fromSite=1" title="Chat with yeex" />
+
+      <area shape="rect" coords="904,523,938,580" class="layout-msg" title="Message yeex" />
+
+      <area shape="rect" coords="904,582,938,639" href="https://pt.imvu.com/catalog/web_mypage.php?block=339692210" target="_blank" title="Block yeex" />
+
+      <area shape="rect" coords="6,355,42,410" class="layout-tab" data-tab="main" />
+
+      <area shape="rect" coords="6,294,44,351" class="layout-tab" data-tab="bio" />
+
+      <area shape="rect" coords="6,236,44,293" class="layout-tab" data-tab="one" />
+
+      <area shape="rect" coords="7,178,45,235" class="layout-tab" data-tab="two" />
+    </map>
+
+    <img id="avipic" src="https://www.imvu.com/catalog/web_av_pic.php?u=339692210" />
+
+    <div id="frame1" class="box"></div>
+
+    <marquee id="shout" direction="left" onmouseover="this.stop()" onmouseout="this.start()" scrollamount="3">
+        <a href="https://guns.lol/yeex">Yeex Pag</a>
+    </marquee>
+
+    <script>
+      changeframe('main', 'frame1');
+
+      $(".layout-tab").click(function () {
+        changeframe($(this).data("tab"), 'frame1');
+      });
+
+      $(".layout-msg").click(function () {
+        IMVU.messagePopupShow({ force_recipient_id: 339692210 });
+      });
+    </script>
+  </div>

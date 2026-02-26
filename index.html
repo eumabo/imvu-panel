@@ -1,9 +1,13 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>YEEX</title>
+  <title>YEEX</title>  
   <style>
     :root{
       --bg:#0b0b10;
@@ -27,38 +31,37 @@
 
     *{ box-sizing:border-box; }
     html, body { height:100%; }
-    
     body {
   margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: rgba(255,255,255,.92);
   background: url("./assets/yeex-background-4k.png") no-repeat center center fixed;
   background-size: cover;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
-  pointer-events: none;
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(900px 600px at 50% 20%, rgba(0,0,0,.35), rgba(0,0,0,.85)),
+    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.90));
+  pointer-events:none;
+  z-index:0;
 }
+.wrap{
+  position:relative;
+  z-index:1;
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 18px 22px 40px;
 
-    /* dark overlay to match the print vibe */
-    body:before{
-      content:"";
-      position:fixed; inset:0;
-      background: radial-gradient(1200px 800px at 50% 25%, rgba(0,0,0,.30), rgba(0,0,0,.70)),
-                  linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.75));
-      pointer-events:none;
-      z-index:0;
-    }
-
-    .wrap{
-      position:relative;
-      z-index:1;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 18px 22px 40px;
-    }
+  /* big glass container (pro look) */
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+}
 
     /* Top header (logo + nav) */
     .top{
@@ -109,16 +112,14 @@ body::before {
 
     /* Controls row */
     .controls{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr 520px;
-      gap: 18px;
-      align-items:start;
-    }
+  margin-top: 14px;
+  display:block; /* sidebar removed */
+}
 
     /* Left main content */
     .main{
       min-width: 0;
+      width: 100%;
     }
 
     .bar{
@@ -185,13 +186,12 @@ body::before {
       gap: 18px;
     }
 
-    .panel{
-      border:1px solid var(--border2);
-      background: rgba(0,0,0,.30);
-      border-radius: var(--radius2);
-      padding: 16px;
-      box-shadow: var(--glow);
-    }
+    .panel, .section, .top{
+  background: rgba(0,0,0,.42);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
     .panel h3{
       margin: 0 0 12px;
       font-size: 22px;
@@ -309,11 +309,50 @@ body::before {
     .cardBody{
       padding: 12px 12px 14px;
     }
+    
     .title{
-      font-size: 18px;
-      font-weight: 900;
-      margin: 0 0 6px;
-    }
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  margin: 0 0 6px;
+
+  color: #ffffff;
+  -webkit-text-stroke: 1px #000;
+
+  text-shadow:
+    0 0 6px rgba(255, 255, 255, 0.55),
+    0 0 18px rgba(134, 134, 134, 0.35),
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+
+  animation: yeexNeon 1.6s ease-in-out infinite;
+}
+
+@keyframes yeexNeon{
+  0%, 100%{
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 0.45),
+      0 0 14px rgba(119, 119, 119, 0.28),
+      -1px -1px 0 #000,
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+    transform: translateY(0);
+  }
+  50%{
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 0.75),
+      0 0 24px rgba(141, 141, 141, 0.5),
+      -1px -1px 0 #000,
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+    transform: translateY(-1px);
+  }
+}
+
     .sub{
       display:flex;
       justify-content:space-between;
@@ -407,6 +446,202 @@ body::before {
       max-width: calc(100% - 24px);
     }
     .toast.show{ opacity: 1; }
+  
+
+/* ===== YEEX polish pack (full width) ===== */
+:root{
+  --glassA: rgba(18,18,24,.58);
+  --glassB: rgba(12,12,16,.46);
+  --lineA: rgba(255,255,255,.10);
+  --lineB: rgba(255,255,255,.06);
+  --shadowA: 0 18px 60px rgba(0,0,0,.60);
+  --shadowB: 0 10px 28px rgba(0,0,0,.45);
+}
+
+.wrap{
+  max-width: 1520px;
+  padding: 28px 24px 60px;
+}
+
+/* tighten top header and add subtle highlight */
+.top{
+  background:
+    radial-gradient(900px 260px at 50% 0%, rgba(255,255,255,.08), transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,.05), transparent 55%),
+    rgba(12,12,16,.60);
+  box-shadow: var(--shadowA);
+}
+
+.logo img{
+  height: 56px;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.55));
+}
+
+.nav{
+  gap: 36px;
+  padding: 12px 16px 16px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* Search bar + tabs align & breathing */
+.bar{
+  padding: 14px 14px;
+  gap: 14px;
+  background: rgba(14,14,18,.58);
+  box-shadow: var(--shadowB);
+}
+
+.search{
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.tabs{
+  gap: 8px;
+}
+
+.tab{
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+}
+.tab.active{
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.16);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 0 18px rgba(255,255,255,.08);
+}
+
+/* Sections */
+.section{
+  padding: 18px;
+  background: rgba(18,18,24,.58);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: var(--shadowB);
+}
+
+.sectionHead{
+  margin-bottom: 14px;
+  align-items:center;
+}
+.sectionHead h2{
+  font-size: 34px;
+  letter-spacing: -.4px;
+  text-shadow: 0 14px 40px rgba(0,0,0,.55);
+}
+
+/* Make filters row wrap nicer on wide screens */
+.catFilters{
+  grid-template-columns: 1.3fr repeat(6, 1fr);
+  gap: 12px;
+}
+@media (max-width: 1300px){
+  .catFilters{ grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .catFilters .span2{ grid-column: span 2; }
+}
+@media (max-width: 900px){
+  .catFilters{ grid-template-columns: 1fr 1fr; }
+  .catFilters .span2{ grid-column: span 2; }
+}
+
+/* Grid: fill screen better */
+.grid{
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+@media (max-width: 1260px){
+  .grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 920px){
+  .grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px){
+  .grid{ grid-template-columns: 1fr; }
+}
+
+/* Cards: more premium */
+.card{
+  border-radius: 14px;
+  background: rgba(12,12,16,.62);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 16px 44px rgba(0,0,0,.55);
+}
+.card:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 22px 60px rgba(0,0,0,.62), 0 0 18px rgba(255,255,255,.10);
+}
+
+.cardTop{
+  height: 170px;
+  background: rgba(0,0,0,.28);
+}
+
+.cardTop img{
+  filter: contrast(1.10) brightness(.95);
+  transform: scale(1.03);
+}
+.card:hover .cardTop img{ transform: scale(1.09); }
+
+.cardBody{ padding: 14px 14px 16px; }
+
+.sub{
+  margin-bottom: 12px;
+  color: rgba(255,255,255,.80);
+}
+
+.tags{
+  margin-bottom: 12px;
+  color: rgba(255,255,255,.52);
+}
+
+.cardBtn{
+  width: 160px;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* Tiny separator line inside sections (like the reference) */
+.sectionHead:after{
+  content:"";
+  display:block;
+  height:1px;
+  width:100%;
+  margin-top: 10px;
+  background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
+}
+
+/* ===== HERO BEST SELLER ===== */
+
+.hero{
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 25px 70px rgba(0,0,0,.65);
+  background: rgba(0,0,0,.35);
+}
+
+.hero img{
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.hero:hover img{
+  transform: scale(1.02);
+}
+
+/* responsivo */
+@media (max-width: 900px){
+  .hero img{ height: 320px; }
+}
+
+@media (max-width: 600px){
+  .hero img{ height: 240px; }
+}
   </style>
 </head>
 
@@ -447,10 +682,13 @@ body::before {
 
         <section class="section" id="topWeek">
           <div class="sectionHead">
-            <h2>Mais clicados da semana</h2>
+            <h2>Best Seller</h2>
             <a href="#catalogo" id="seeAll">Ver tudo →</a>
           </div>
-          <div class="grid" id="topGrid"></div>
+          <div class="hero">
+  <img src="./assets/best-seller-banner.png" alt="Yeex Store Lançamentos">
+</div>
+
           <div class="count" id="topCount"></div>
         </section>
 
@@ -483,40 +721,7 @@ body::before {
           <div class="grid" id="grid"></div>
         </section>
       </div>
-
-      <aside class="side">
-        <div class="panel" id="login">
-          <h3>Login administrativo</h3>
-          <input class="field" placeholder="" value="" />
-          <input class="field" placeholder="" type="password" value="" />
-          <button class="btn" id="btnLogin">Entrar</button>
-        </div>
-
-        <div class="panel">
-          <h3>Catálogo</h3>
-          <input class="field" placeholder="Buscar..." id="qSide" />
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <select class="field" id="typeSide">
-              <option value="">Tipo</option>
-              <option value="shoe">Shoes</option>
-              <option value="clothing">Clothing</option>
-            </select>
-            <select class="field" id="genderSide">
-              <option value="">Gênero</option>
-              <option value="female">Feminino</option>
-              <option value="male">Masculino</option>
-              <option value="unisex">Unissex</option>
-            </select>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <input class="field" placeholder="Categoria" id="categorySide"/>
-            <input class="field" placeholder="Tag" id="tagSide"/>
-          </div>
-          <button class="btn" id="applySide">Aplicar</button>
-          <button class="btn danger" id="resetClicks" style="margin-top:10px;">Reset clicks</button>
-        </div>
-      </aside>
-    </div>
+</div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -894,8 +1099,8 @@ body::before {
         document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
         t.classList.add("active");
         state.tab = t.getAttribute("data-tab") || "all";
-        renderTopWeek();
-        renderCatalog();
+       // renderTopWeek(); // removido
+renderCatalog();
       });
     });
 
@@ -907,22 +1112,7 @@ body::before {
       renderCatalog();
     });
 
-    // Sidebar quick apply
-    $("applySide").addEventListener("click", ()=>{
-      $("q").value = $("qSide").value;
-      $("type").value = $("typeSide").value;
-      $("gender").value = $("genderSide").value;
-      $("category").value = $("categorySide").value;
-      $("tag").value = $("tagSide").value;
-
-      syncFromInputs();
-      renderCatalog();
-      toast("Filtros aplicados");
-    });
-
-    // Admin login fake (visual)
-    $("btnLogin").addEventListener("click", ()=>toast("Login (visual) • pra funcionar de verdade precisa site + backend"));
-
+    
     // Clear filters
     $("clearFilters").addEventListener("click", (e)=>{
       e.preventDefault();
@@ -932,13 +1122,7 @@ body::before {
       toast("Filtros limpos");
     });
 
-    // Reset clicks
-    $("resetClicks").addEventListener("click", ()=>{
-      localStorage.removeItem(CLICK_KEY);
-      renderTopWeek();
-      toast("Clicks resetados");
-    });
-
+    
     // nav gender shortcuts
     document.querySelectorAll("[data-nav]").forEach(a=>{
       a.addEventListener("click", ()=>{
@@ -973,8 +1157,8 @@ body::before {
 
     // Init
     syncFromInputs();
-    renderTopWeek();
-    renderCatalog();
+    // renderTopWeek(); // removido
+renderCatalog();
   </script>
 </body>
 </html>

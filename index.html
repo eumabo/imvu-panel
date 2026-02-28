@@ -3,15 +3,67 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Yeex • </title>
+  <title>Shop Yeex </title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon.png">
   <script src="app.js" defer></script>
 </head>
 <body>
 
+  <!-- Scroll indicator (mouse) -->
+<div class="scroll-indicator" aria-hidden="true">
+  <div class="mouse">
+    <div class="wheel"></div>
+  </div>
+</div>
+
+<style>
+  .scroll-indicator{
+    position: absolute;           /* fica por cima do hero */
+    left: 50%;
+    bottom: 24px;                 /* distância do rodapé */
+    transform: translateX(-50%);
+    opacity: .35;                 /* opacidade baixa */
+    pointer-events: none;         /* não atrapalha clique */
+    z-index: 50;
+  }
+
+  .mouse{
+    width: 28px;
+    height: 44px;
+    border: 2px solid rgba(255,255,255,.9);
+    border-radius: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+    backdrop-filter: blur(2px);
+  }
+
+  .wheel{
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background: rgba(255,255,255,.9);
+    animation: wheelMove 1.4s ease-in-out infinite;
+  }
+
+  @keyframes wheelMove{
+    0%   { transform: translateY(0);    opacity: 1; }
+    60%  { transform: translateY(12px); opacity: .2; }
+    100% { transform: translateY(0);    opacity: 1; }
+  }
+
+  /* opcional: some em telas muito baixas */
+  @media (max-height: 520px){
+    .scroll-indicator{ display:none; }
+
+  }
+
+</style>
+
   <div class="visit-counter">
-    <span id="visit-number">Carregando...</span>
+    <span id="visit-number">5</span>
   </div>
 
   <audio id="bgm" src="assets/music.mp3" preload="auto" loop></audio>

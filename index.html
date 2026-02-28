@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Shop Yeex </title>
+  <title>Yeex • </title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon.png">
   <script src="app.js" defer></script>
@@ -60,11 +60,30 @@
 
   }
 
+
+
 </style>
 
+
+
   <div class="visit-counter">
-    <span id="visit-number">5</span>
+    <span id="visit-number">Carregando...</span>
   </div>
+
+<script>
+  // pega valor atual
+  let visits = localStorage.getItem("visits");
+
+  if (!visits) {
+    visits = 0;
+  }
+
+  visits++; // soma 1
+  localStorage.setItem("visits", visits);
+
+  // coloca no span
+  document.getElementById("visit-number").textContent = visits;
+</script>
 
   <audio id="bgm" src="assets/music.mp3" preload="auto" loop></audio>
 

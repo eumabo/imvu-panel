@@ -344,7 +344,7 @@ section {
 }
 
 .logo-3d img {
-  width: 100%;
+  width: 80%;
   animation: spin3d 7s linear infinite;
   transform-style: preserve-3d;
 }
